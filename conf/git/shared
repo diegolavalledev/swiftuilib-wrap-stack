@@ -1,0 +1,15 @@
+#
+# To decrypt:
+#
+#   gpg --output conf/git/user --decrypt conf/git/users/[USER].gpg && git config include.path ../conf/git/shared
+
+#
+# To encrypt:
+#
+#   gpg --output conf/git/users/[USER].gpg --encrypt --recipient [USER] conf/git/user
+#
+
+[commit]
+	gpgsign = true
+[include]
+  path = user

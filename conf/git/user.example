@@ -1,0 +1,10 @@
+#
+# Get key
+#
+#   gpg --list-keys --keyid-format LONG your@email.com
+#
+
+[user]
+  signingkey = 1234567AB89CDEFG
+  name = Your Name
+  email = your@email.com
