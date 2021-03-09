@@ -2,49 +2,44 @@ import SwiftUI
 
 struct WrapStack<Content: View>: View {
 
-  var width: CGFloat!
-  var height: CGFloat!
-  var verticalAlignment: VerticalAlignment!
-  var horizontalAlignment: HorizontalAlignment!
-  var spacing: CGFloat
+  let width: CGFloat!
+  let height: CGFloat!
+  let verticalAlignment: VerticalAlignment!
+  let horizontalAlignment: HorizontalAlignment!
+  let spacing: CGFloat
+  let content: [Content]
   
-  var content: [Content]
-  
-  var directionHorizontal: Bool {
-    width != nil
-  }
-  var length: CGFloat {
-    directionHorizontal ? width : height
-  }
+  private let directionHorizontal: Bool
+  private let length: CGFloat
+  private let totalLanes: Int
+  private let limits: [Int]
 
-  var metrics: (Int, [Int]) {
-    let (lanes, limits, _, _) =
-      content.reduce((0, [], 0, length)) {
+  init(width: CGFloat? = nil, height: CGFloat? = nil, verticalAlignment: VerticalAlignment? = nil, horizontalAlignment: HorizontalAlignment? = nil, spacing: CGFloat, content: [Content]) {
+    self.width = width
+    self.height = height
+    self.verticalAlignment = verticalAlignment
+    self.horizontalAlignment = horizontalAlignment
+    self.spacing = spacing
+    self.content = content
+    let directionHorizontal = width != nil
+    let length = directionHorizontal ? width! : height!
+    self.directionHorizontal = directionHorizontal
+    self.length = length
+    (totalLanes, limits, _, _) = content.reduce((0, [], 0, length)) {
         (accum, item) -> (Int, [Int], Int, CGFloat) in
         var (lanesSoFar, limits, index, laneLength) = accum
         let itemSize = UIHostingController(rootView: item).view.intrinsicContentSize
         let itemLength = directionHorizontal ? itemSize.width : itemSize.height
-        if laneLength + itemLength > self.length {
+        if laneLength + itemLength > length {
           lanesSoFar += 1
           laneLength = itemLength
           limits.append(index)
         } else {
-          laneLength += itemLength + self.spacing
+          laneLength += itemLength + spacing
         }
         index += 1
         return (lanesSoFar, limits, index, laneLength)
     }
-    return (lanes, limits)
-  }
-  
-  var totalLanes: Int {
-    let (lanes, _) = metrics
-    return lanes
-  }
-  
-  var limits: [Int] {
-    let (_, limits) = metrics
-    return limits
   }
   
   func lowerLimit(_ index: Int) -> Int {

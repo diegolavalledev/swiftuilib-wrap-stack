@@ -4,7 +4,7 @@ public struct WVStack: View {
 
   @usableFromInline var alignment: HorizontalAlignment = .center
   @usableFromInline var spacing: CGFloat = 0
-  @usableFromInline var content: [AnyView]
+  @usableFromInline let content: [AnyView]
   @State private var width: CGFloat = 0
 
   
