@@ -55,6 +55,8 @@ public struct WVStack: View {
   }
 }
 
+#if DEBUG
+
 struct WVStack_Previews: PreviewProvider {
   
   @ViewArrayBuilder static func single() -> [AnyView] {
@@ -63,36 +65,37 @@ struct WVStack_Previews: PreviewProvider {
   
   static var previews: some View {
     Group {
-      
-      WVStack(alignment: .center, spacing: 10) {[
-        Color.red.frame(width: 150, height: 100),
-        Color.green.frame(width: 50, height: 150),
-        Color.yellow.frame(width: 100, height: 150),
-        Color.orange.frame(width: 50, height: 50),
-        Color.purple.frame(width: 30, height: 50),
-        Color.blue.frame(width: 50, height: 50),
-        Color.gray.frame(width: 50, height: 50),
-        Color.green.frame(width: 50, height: 50),
-        Color.yellow.frame(width: 100, height: 150),
-        Color.orange.frame(width: 50, height: 50),
-        Color.purple.frame(width: 30, height: 50),
-        Color.red.frame(width: 150, height: 100),
-        Color.green.frame(width: 50, height: 150),
-        Color.yellow.frame(width: 100, height: 150),
-        Color.orange.frame(width: 50, height: 50),
-        Color.purple.frame(width: 30, height: 50),
-        Color.blue.frame(width: 50, height: 50),
-        Color.gray.frame(width: 50, height: 50),
-        Color.green.frame(width: 50, height: 50),
-        Color.blue.frame(width: 50, height: 50),
-        Color.gray.frame(width: 50, height: 50),
-        Color.green.frame(width: 50, height: 50),
-      ]}
-      //.frame(height: 350)
+
+        let first: [any View] = [
+            Color.red.frame(width: 150, height: 100),
+            Color.green.frame(width: 50, height: 150),
+            Color.yellow.frame(width: 100, height: 150),
+            Color.orange.frame(width: 50, height: 50),
+            Color.purple.frame(width: 30, height: 50),
+            Color.blue.frame(width: 50, height: 50),
+            Color.gray.frame(width: 50, height: 50),
+            Color.green.frame(width: 50, height: 50),
+            Color.yellow.frame(width: 100, height: 150),
+            Color.orange.frame(width: 50, height: 50),
+            Color.purple.frame(width: 30, height: 50),
+            Color.red.frame(width: 150, height: 100),
+            Color.green.frame(width: 50, height: 150),
+            Color.yellow.frame(width: 100, height: 150),
+            Color.orange.frame(width: 50, height: 50),
+            Color.purple.frame(width: 30, height: 50),
+            Color.blue.frame(width: 50, height: 50),
+            Color.gray.frame(width: 50, height: 50),
+            Color.green.frame(width: 50, height: 50),
+            Color.blue.frame(width: 50, height: 50),
+            Color.gray.frame(width: 50, height: 50),
+            Color.green.frame(width: 50, height: 50),
+        ]
+        WVStack(alignment: .center, spacing: 10, content: { first.map { AnyView($0) } })
       .border(Color.black, width: 1)
 
       ScrollView {
         VStack {
+
           Group {
             Text("Header")
             Spacer()
@@ -219,3 +222,5 @@ struct WVStack_Previews: PreviewProvider {
     }
   }
 }
+
+#endif
